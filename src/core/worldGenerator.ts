@@ -19,19 +19,25 @@ export class WorldGenerator {
   private fbm(x: number, y: number, z: number): number {
     let f = 0.0;
     let w = 0.5;
+    let wsum = 0.0;
     const p = new THREE.Vector3(x, y, z);
-    for (let i = 0; i < 5; i++) {
+    // terrainRoughness 0–1 → 3–7 octaves (default 0.5 → 5 octaves, same as before)
+    const octaves = 3 + Math.round(this.params.terrainRoughness * 4);
+    for (let i = 0; i < octaves; i++) {
       f += w * this.noise3D(p.x, p.y, p.z);
+      wsum += w;
       p.multiplyScalar(2.0);
       w *= 0.5;
     }
-    return f * 0.5 + 0.5;
+    return (f / wsum) * 0.5 + 0.5;
   }
 
   public getElevation(x: number, y: number, z: number): number {
-    const { seed } = this.params;
+    const { seed, continentDensity } = this.params;
+    // continentDensity 0–1 → noise scale 1–3 (default 0.5 → 2.0, same as before)
+    const noiseScale = 1.0 + continentDensity * 2.0;
     const noisePos = new THREE.Vector3(x, y, z)
-      .multiplyScalar(2.0)
+      .multiplyScalar(noiseScale)
       .add(new THREE.Vector3(seed * 0.1, seed * 0.2, seed * 0.3));
     return this.fbm(noisePos.x, noisePos.y, noisePos.z);
   }
@@ -68,7 +74,9 @@ export class WorldGenerator {
     const humidities: number[] = [];
     const biomes: string[] = [];
 
-    const { waterLevel, iceCoverage } = this.params;
+    const { waterLevel, iceCoverage, vegetationDensity } = this.params;
+    // vegetationDensity 0–1 → forest threshold 0.55–0.85 (default 0.5 → 0.70, same as before)
+    const forestHumidityThreshold = 0.85 - vegetationDensity * 0.3;
 
     for (let i = 0; i < posAttribute.count; i++) {
       const x = posAttribute.getX(i);
@@ -126,7 +134,7 @@ export class WorldGenerator {
           r = 0.6;
           g = 0.6;
           b = 0.3;
-        } else if (humidity > 0.7) {
+        } else if (humidity > forestHumidityThreshold) {
           biome = 'Forest';
           r = 0.15;
           g = 0.35;

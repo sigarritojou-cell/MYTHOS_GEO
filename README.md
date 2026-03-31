@@ -35,6 +35,9 @@ npm run build
 npm run preview
 npm run typecheck
 npm run lint
+npm test          # ejecuta todos los tests (una sola vez)
+npm run test:watch  # ejecuta los tests en modo watch
+npm run test:ui     # abre la interfaz gráfica de Vitest
 ```
 
 ## Estructura
@@ -57,4 +60,4 @@ Consulta `AGENTS.md` y la carpeta `agents/`.
 
 ## Observaciones
 
-El proyecto procede de una exportación de AI Studio. No he podido validar `npm install` ni `npm run build` dentro de este entorno porque no tengo acceso de red para descargar paquetes, así que la CI del repo es la red de seguridad para verificar instalación, tipado y build reales en GitHub.
+El proyecto procede de una exportación de AI Studio. La CI del repo verifica instalación, tipado y build reales en GitHub. Los tests unitarios se ejecutan con `npm test` (Vitest).

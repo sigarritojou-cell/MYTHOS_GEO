@@ -27,7 +27,42 @@ npm install
 npm run dev
 ```
 
-## Scripts
+## Script de tests
+
+Hay un script de ayuda para cada plataforma. Ambos aceptan los mismos comandos.
+
+### Linux / macOS — `run.sh`
+
+```bash
+./run.sh              # instala deps y ejecuta los tests (una sola vez)
+./run.sh install      # solo instala las dependencias
+./run.sh test         # instala deps y ejecuta los tests (una sola vez)
+./run.sh watch        # instala deps y arranca Vitest en modo watch
+./run.sh ui           # instala deps y abre la UI gráfica de Vitest
+./run.sh --help       # muestra la ayuda
+```
+
+### Windows — `run.bat`
+
+```bat
+run.bat               :: instala deps y ejecuta los tests (una sola vez)
+run.bat install       :: solo instala las dependencias
+run.bat test          :: instala deps y ejecuta los tests (una sola vez)
+run.bat watch         :: instala deps y arranca Vitest en modo watch
+run.bat ui            :: instala deps y abre la UI gráfica de Vitest
+run.bat /?            :: muestra la ayuda
+```
+
+También se puede invocar cada comando directamente con npm:
+
+```bash
+npm install
+npm test              # ejecuta todos los tests (una sola vez)
+npm run test:watch    # ejecuta los tests en modo watch
+npm run test:ui       # abre la interfaz gráfica de Vitest
+```
+
+## Scripts de npm
 
 ```bash
 npm run dev
@@ -57,4 +92,4 @@ Consulta `AGENTS.md` y la carpeta `agents/`.
 
 ## Observaciones
 
-El proyecto procede de una exportación de AI Studio. No he podido validar `npm install` ni `npm run build` dentro de este entorno porque no tengo acceso de red para descargar paquetes, así que la CI del repo es la red de seguridad para verificar instalación, tipado y build reales en GitHub.
+El proyecto procede de una exportación de AI Studio. La CI del repo verifica instalación, tipado y build reales en GitHub. Los tests unitarios se ejecutan con `npm test` (Vitest).

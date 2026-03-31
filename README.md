@@ -29,7 +29,9 @@ npm run dev
 
 ## Script de tests
 
-El archivo `run.sh` centraliza la instalación de dependencias y la ejecución de tests:
+Hay un script de ayuda para cada plataforma. Ambos aceptan los mismos comandos.
+
+### Linux / macOS — `run.sh`
 
 ```bash
 ./run.sh              # instala deps y ejecuta los tests (una sola vez)
@@ -38,6 +40,17 @@ El archivo `run.sh` centraliza la instalación de dependencias y la ejecución d
 ./run.sh watch        # instala deps y arranca Vitest en modo watch
 ./run.sh ui           # instala deps y abre la UI gráfica de Vitest
 ./run.sh --help       # muestra la ayuda
+```
+
+### Windows — `run.bat`
+
+```bat
+run.bat               :: instala deps y ejecuta los tests (una sola vez)
+run.bat install       :: solo instala las dependencias
+run.bat test          :: instala deps y ejecuta los tests (una sola vez)
+run.bat watch         :: instala deps y arranca Vitest en modo watch
+run.bat ui            :: instala deps y abre la UI gráfica de Vitest
+run.bat /?            :: muestra la ayuda
 ```
 
 También se puede invocar cada comando directamente con npm:
